@@ -2,9 +2,11 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
 
-Front end from a test application developed with Angular and Symfony.
+Front end from a test application developed with Angular and Symfony. 
 
 If you wanna visit the app, click this link: https://danielsoltero.com
+
+I will add in the future in other repository the back end of the app
 
 ## Development server
 
