@@ -1,0 +1,49 @@
+<!--PODCAST-->
+<br>
+<article class="card w-75 mx-auto" *ngIf="podcast.title!=''">
+    <div class="card-header podcast text-center"><!--Datos del podcast-->
+        <h1 class="text-center">
+            {{podcast.title}}
+        </h1>
+        <hr>
+        <h4 class="text-center">
+            de <a [routerLink]="['/user',podcast.user.id]">{{podcast.user.username}}</a>
+        </h4>
+        <span class="badge badge-light w-50">Subido: {{podcast.createdAt | amLocale: 'es' | amTimeAgo }}</span><br>
+        <span class="badge badge-light w-50">Última mod: {{podcast.updatedAt | amLocale: 'es' | amTimeAgo }}</span><br><br>
+        <img src="{{this.url+'uploads/images/podcast/'+podcast.image}}" class="imgPodcast w-50" /> <br>
+        <br>
+        <audio class="w-75" src="{{this.url+'uploads/audios/'+podcast.audio}}" preload="auto" controls></audio>
+    </div>
+    <div class="card-body" *ngIf="identity.user_id==podcast.user.id">
+        <div class="podcast-buttons text-center mt-1"><!--Botones de la tarjeta de podcast-->
+            <a [routerLink]="['/podcast/edit',podcast.id]" class="btn btn-warning mr-5 ">Modificar</a>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" 
+                    [attr.data-target]="'#borrar'+podcast.id">
+                Eliminar
+            </button>
+            <!-- Modal (Mensaje de alerta al pulsar el boton de borrar)-->
+            <div class="modal fade" id="{{'borrar'+podcast.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content"><!--Contenido del mensaje de alerta-->
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">¿Seguro que quieres borrar este podcast?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            No vas a poder deshacer tus cambios (Vas a borrar "{{podcast.title}}")
+                        </div>
+                        <div class="modal-footer"><!--Botones de la alerta-->
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                            <a class="btn btn-danger" (click)="deletePodcast(podcast.id)" data-dismiss="modal">Borrar definitivamente</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+    <a [routerLink]="['/home']" class="btn btn-primary mt-1 mb-2 mx-auto inicio">Inicio</a>
+</article>  
+<br>

@@ -1,0 +1,32 @@
+<br>
+<h2>Editar Usuario</h2>
+<!--MENSAJE DE ERROR AL REGISTRARSE-->
+<div class="alert alert-danger" *ngIf="statusMod.status=='error'">
+    {{statusMod.message}}
+</div>
+<!--MENSAJE DE EXITO AL REGISTRARSE-->
+<div class="alert alert-success" *ngIf="statusMod.status=='success'">
+    {{statusMod.message}}
+</div>
+<form class="col-md-5 ml-0 pl-0" #editUserForm="ngForm" (ngSubmit)="editarUsuario(editUserForm)">
+    <div class="form-group"><!--Campo del nombre de usuario-->
+        <label for="username">Nombre de usuario:</label>
+        <input type="text" name="username" class="form-control" #username="ngModel" [(ngModel)]="user.username"
+        pattern="[a-zA-Z0-9]+" required/>
+        <small *ngIf="!username.valid && username.touched" class="invalid-feedback d-block">
+            El nombre de usuario no es válido
+        </small>
+    </div>
+    <div class="form-group"><!--Campo de subida de archivos de imagen-->
+        <label for="image">Avatar de usuario:</label>
+        <angular-file-uploader
+            [config]="afuConfig"
+            [resetUpload]=true
+            (ApiResponse)=imageUpload($event)>
+        </angular-file-uploader>
+        <img src="{{this.url+'uploads/images/user/'+user.image}}" class="mt-2 ml-4 imgMuestra" *ngIf="user.image!=''">
+    </div>  
+    <br>
+    <!--Boton de envío-->
+    <input type="submit" value="Editar" class="btn-success btn" [disabled]="editUserForm.invalid"/>
+</form>

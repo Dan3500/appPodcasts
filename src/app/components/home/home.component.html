@@ -1,0 +1,80 @@
+<br>
+<h1 class="text-center">TODOS LOS PODCASTS</h1>
+<hr>
+<br>
+<!--MENSAJE DE ERROR-->
+<div class="alert alert-danger" *ngIf="errorMsg!=''">
+    {{errorMsg}}
+</div>
+<!--LISTADO DE PODCAST-->
+<div class="card-columns">
+    <!--PODCAST-->
+    <article class="card w-85" *ngFor="let podcast of podcasts">
+        <div class="card-header podcast"><!--Datos del podcast-->
+            <h3>
+                {{podcast.title}}
+            </h3>
+            <h5>
+                de <a [routerLink]="['/user',podcast.user.id]">{{podcast.user.username}}</a>
+            </h5>
+            <img src="{{this.url+'uploads/images/podcast/'+podcast.image}}" class="imgPodcast" /> <br>
+            <span class="badge badge-primary">Subido: {{podcast.createdAt | amLocale: 'es' | amTimeAgo }}</span><br>
+            <span class="badge badge-primary">Última mod: {{podcast.updatedAt | amLocale: 'es' | amTimeAgo }}</span>
+        </div>
+        <div class="card-body">
+            <div class="podcast-buttons mt-2"><!--Botones de la tarjeta de podcast-->
+                <a [routerLink]="['/podcast',podcast.id]" class="btn btn-primary mr-2">Escuchar</a>
+                <a [routerLink]="['/podcast/edit',podcast.id]" class="btn btn-warning mr-2" *ngIf="identity.user_id==podcast.user.id">Modificar</a>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" 
+                        *ngIf="identity.user_id==podcast.user.id"
+                        [attr.data-target]="'#borrar'+podcast.id">
+                    Eliminar
+                </button>
+                <!-- Modal (Mensaje de alerta al pulsar el boton de borrar)-->
+                <div class="modal fade" id="{{'borrar'+podcast.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                    <div class="modal-content"><!--Contenido del mensaje de alerta-->
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">¿Seguro que quieres borrar este podcast?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            No vas a poder deshacer tus cambios (Vas a borrar "{{podcast.title}}")
+                        </div>
+                        <div class="modal-footer"><!--Botones de la alerta-->
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                            <a class="btn btn-danger" (click)="deletePodcast(podcast.id)" data-dismiss="modal">Borrar definitivamente</a>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</div>
+<!--BOTONES DE PAGINACION-->
+<div class="paginator text-center" *ngIf="podcasts">
+    <h5>Página {{page}}</h5>
+    <nav aria-label="Page navigation example" class="pagBtn">
+        <ul class="pagination pagination-centered pagList">
+          <li class="page-item item"><!--Boton de anterior-->
+            <a class="page-link" [routerLink]="['/home',prev_page]" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          <!--Botones de las páginas-->
+          <li class="page-item item" *ngFor="let pag of total_pages">
+              <a class="page-link" [routerLink]="['/home',pag]">{{pag}}</a>
+            </li>
+          <li class="page-item item"><!--Boton de siguiente-->
+            <a class="page-link" [routerLink]="['/home',next_page]" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+        </ul>
+    </nav>
+</div>

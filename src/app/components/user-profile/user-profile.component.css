@@ -1,0 +1,30 @@
+.imgPodcast{
+    width:50%;
+}
+
+.podcast{
+    text-align:center;
+}
+
+.paginator{
+    text-align:center;
+    margin:auto;
+}
+
+.pagBtn{
+    width:100%;
+    margin:auto;
+}
+
+.pagList{
+    text-align:center;
+    justify-content: center;
+}
+
+.item{
+    text-align:center;
+}
+
+.avatarUser{
+    border-radius: 100%;
+}

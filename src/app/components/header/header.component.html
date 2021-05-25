@@ -1,0 +1,29 @@
+<br>
+<!--NAVBAR-->
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <a class="navbar-brand" [routerLink]="['/home']">
+        <img src="../../../assets/images/icon.png" width="30" height="30" class="d-inline-block align-top" alt="">
+        PODCASTS RADIO
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" *ngIf="identity">
+        <img src="{{this.url+'uploads/images/user/'+identity.image}}" class="imgUser ml-auto"/>
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown"><!--Desplegable-->
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{identity.username}}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" [routerLink]="['/user',identity.user_id]">Mi perfil</a>
+                <a class="dropdown-item" [routerLink]="['user-edit']">Ajustes</a>
+                <a class="dropdown-item" [routerLink]="['new-podcast']">Subir Podcast</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" [routerLink]="['/logout/1']">Cerrar sesión</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+

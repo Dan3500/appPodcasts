@@ -1,0 +1,38 @@
+<br>
+<h2>Modificar podcast</h2>
+<div class="alert alert-danger" *ngIf="statusMessage.status=='error'">
+    {{statusMessage.message}}
+</div>
+<!--FORMULARIO PARA SUBIR UN NUEVO PODCAST-->
+<form class="col-md-5 ml-0 pl-0" #editForm="ngForm" (ngSubmit)="editPodcast(editForm)">
+    <div class="form-group"><!--Campo de titulo del podcast-->
+        <label for="title">Título:</label>
+        <input type="text" name="title" class="form-control" #title="ngModel" [(ngModel)]="podcast.title" required />
+        <small *ngIf="!title.valid && title.touched" class="invalid-feedback d-block">
+            El título del podcast no es válido
+        </small>
+    </div>
+    <div class="form-group"><!--Campo de subida de archivos de imagen-->
+        <label for="image">Imagen:</label>
+        <angular-file-uploader
+            [config]="afuConfig"
+            [resetUpload]=true
+            (ApiResponse)=imageUpload($event)>
+        </angular-file-uploader>
+        <img src="{{this.url+'uploads/images/podcast/'+podcast.image}}" class="mt-2 ml-4 imgMuestra" *ngIf="podcast.image!=''">
+    </div>  
+    <div class="form-group"><!--Campo de subida de archivos de audio-->
+        <label for="image">Audio:</label>
+        <angular-file-uploader
+            [config]="afuConfigAudio"
+            [resetUpload]=true
+            (ApiResponse)=audioUpload($event)>
+        </angular-file-uploader>
+        <h6>ORIGINAL: {{audioOriginal}}</h6>
+        <div class="alert alert-danger w-75" *ngIf="msgError==true">
+            El fichero de audio que intentas subir no es válido. Elige otro
+        </div>
+    </div>                      
+    <!--Boton de envio-->
+    <input type="submit" value="Modificar Podcast" class="btn-success btn" [disabled]="editForm.invalid"/>
+</form>

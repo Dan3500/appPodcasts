@@ -1,0 +1,70 @@
+<!--FORMULARIO DE INICIO DE SESION-->
+<br>
+<h2>Inicio de sesión</h2>
+<!--MENSAJE DE ERROR AL INICIAR SESION-->
+<div class="alert alert-danger" *ngIf="statusLog.status=='error'">
+    {{statusLog.message}}
+</div>
+<form class="col-md-5 ml-0 pl-0" #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+    <!--Campo del email del usuario-->
+    <div class="form-group">
+        <label for="emailLog">Email:</label>
+        <input type="email" name="emailLog" class="form-control" #emailLog="ngModel" [(ngModel)]="userLog.email"
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required/>
+        <small *ngIf="!emailLog.valid && emailLog.touched" class="invalid-feedback d-block">
+            El email no es válido
+        </small>
+    </div>
+    <!--Campo de contraseña-->
+    <div class="form-group">
+        <label for="passwordLog">Contraseña:</label>
+        <input type="password" name="passwordLog" class="form-control" #passwordLog="ngModel" [(ngModel)]="userLog.password" required/>
+    </div>
+    <!--Boton de envío-->
+    <input type="submit" value="Iniciar sesión" class="btn-success btn" [disabled]="loginForm.invalid"/>
+</form>
+<hr>
+<br>
+<!--FORMULARIO DE REGISTRO-->
+<h2>Registro</h2>
+<!--MENSAJE DE ERROR AL REGISTRARSE-->
+<div class="alert alert-danger" *ngIf="statusReg.status=='error'">
+    {{statusReg.message}}
+</div>
+<!--MENSAJE DE EXITO AL REGISTRARSE-->
+<div class="alert alert-success" *ngIf="statusReg.status=='success'">
+    {{statusReg.message}}, inicia sesión para entrar
+</div>
+<form class="col-md-5 ml-0 pl-0" #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+    <div class="form-group"><!--Campo del nombre de usuario-->
+        <label for="username">Nombre de usuario:</label>
+        <input type="text" name="username" class="form-control" #username="ngModel" [(ngModel)]="user.username"
+        pattern="[a-zA-Z0-9]+" required/>
+        <small *ngIf="!username.valid && username.touched" class="invalid-feedback d-block">
+            El nombre de usuario no es válido
+        </small>
+    </div><!--Campo del email del usuario-->
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" name="email" class="form-control" #email="ngModel" [(ngModel)]="user.email"
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required/>
+        <small *ngIf="!email.valid && email.touched" class="invalid-feedback d-block">
+            El email no es válido
+        </small>
+    </div>
+    <!--Campos de contraseñas-->
+    <div class="form-group">
+        <label for="password">Contraseña:</label>
+        <input type="password" name="password" class="form-control" #password="ngModel" [(ngModel)]="user.password" required/>
+    </div>
+    <div class="form-group">
+        <label for="password2">Repetir contraseña</label>
+        <input type="password" name="password2" class="form-control" #password2="ngModel" [(ngModel)]="repPass" required/>
+    </div>
+    <small *ngIf="user.password!=repPass && password.touched" class="invalid-feedback d-block">
+        Las contraseñas no coinciden
+    </small>
+    <!--Boton de envío-->
+    <input type="submit" value="Registrarse" class="btn-success btn" [disabled]="registerForm.invalid"/>
+</form>
+
